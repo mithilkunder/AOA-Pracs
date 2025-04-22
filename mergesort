@@ -1,54 +1,75 @@
 #include <stdio.h>
 
-// Function to perform Selection Sort
-void selectionSort(int array[], int size) {
-    int i, j, minIndex, temp;
+void merge(int arr[], int left, int mid, int right) {
+    int i, j, k;
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
 
-    for (i = 0; i < size - 1; i++) {
-        minIndex = i;
-        for (j = i + 1; j < size; j++) {
-            if (array[j] < array[minIndex]) {
-                minIndex = j;
-            }
+    int L[n1], R[n2];
+
+    for (i = 0; i < n1; i++)
+        L[i] = arr[left + i];
+    for (j = 0; j < n2; j++)
+        R[j] = arr[mid + 1 + j];
+
+    i = 0;
+    j = 0;
+    k = left;
+
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            arr[k++] = L[i++];
+        } else {
+            arr[k++] = R[j++];
         }
+    }
 
-        // Swap the found minimum element with the current element
-        temp = array[minIndex];
-        array[minIndex] = array[i];
-        array[i] = temp;
+    while (i < n1) {
+        arr[k++] = L[i++];
+    }
+
+    while (j < n2) {
+        arr[k++] = R[j++];
     }
 }
 
-// Function to print the array
-void printArray(int array[], int size) {
-    for (int i = 0; i < size; i++) {
-        printf("%d ", array[i]);
+void mergeSort(int arr[], int left, int right) {
+    if (left < right) {
+        int mid = left + (right - left) / 2;
+
+        mergeSort(arr, left, mid);
+        mergeSort(arr, mid + 1, right);
+
+        merge(arr, left, mid, right);
     }
+}
+
+void printArray(int arr[], int size) {
+    for (int i = 0; i < size; i++)
+        printf("%d ", arr[i]);
     printf("\n");
 }
 
 int main() {
     int size;
 
-    // Ask user for number of elements
     printf("Enter number of elements: ");
     scanf("%d", &size);
 
-    int array[size];  // Declare array of given size
+    int arr[size];
 
-    // Input elements from user
     printf("Enter %d elements:\n", size);
     for (int i = 0; i < size; i++) {
-        scanf("%d", &array[i]);
+        scanf("%d", &arr[i]);
     }
 
     printf("Original array:\n");
-    printArray(array, size);
+    printArray(arr, size);
 
-    selectionSort(array, size);
+    mergeSort(arr, 0, size - 1);
 
     printf("Sorted array:\n");
-    printArray(array, size);
+    printArray(arr, size);
 
     return 0;
 }
