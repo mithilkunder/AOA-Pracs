@@ -1,0 +1,54 @@
+#include <stdio.h>
+
+// Function to perform Selection Sort
+void selectionSort(int array[], int size) {
+    int i, j, minIndex, temp;
+
+    for (i = 0; i < size - 1; i++) {
+        minIndex = i;
+        for (j = i + 1; j < size; j++) {
+            if (array[j] < array[minIndex]) {
+                minIndex = j;
+            }
+        }
+
+        // Swap the found minimum element with the current element
+        temp = array[minIndex];
+        array[minIndex] = array[i];
+        array[i] = temp;
+    }
+}
+
+// Function to print the array
+void printArray(int array[], int size) {
+    for (int i = 0; i < size; i++) {
+        printf("%d ", array[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int size;
+
+    // Ask user for number of elements
+    printf("Enter number of elements: ");
+    scanf("%d", &size);
+
+    int array[size];  // Declare array of given size
+
+    // Input elements from user
+    printf("Enter %d elements:\n", size);
+    for (int i = 0; i < size; i++) {
+        scanf("%d", &array[i]);
+    }
+
+    printf("Original array:\n");
+    printArray(array, size);
+
+    selectionSort(array, size);
+
+    printf("Sorted array:\n");
+    printArray(array, size);
+
+    return 0;
+}
