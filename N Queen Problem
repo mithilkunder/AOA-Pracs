@@ -1,0 +1,64 @@
+#include <stdio.h>
+#include <stdlib.h> // for abs()
+
+#define MAX 20
+
+int board[MAX];
+int solutionCount = 0;
+
+int isSafe(int row, int col) {
+    for (int i = 0; i < row; i++) {
+        if (board[i] == col || abs(board[i] - col) == row - i)
+            return 0;
+    }
+    return 1;
+}
+
+void printBoard(int n) {
+    solutionCount++;
+    printf("Solution %d:\n", solutionCount);
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (board[i] == j)
+                printf(" Q ");
+            else
+                printf(" . ");
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
+
+void solveNQueens(int row, int n) {
+    if (row == n) {
+        printBoard(n);
+        return;
+    }
+
+    for (int col = 0; col < n; col++) {
+        if (isSafe(row, col)) {
+            board[row] = col;
+            solveNQueens(row + 1, n);
+            // Backtracking happens naturally
+        }
+    }
+}
+
+int main() {
+    int n;
+    printf("Enter the number of queens (1 to %d): ", MAX);
+    if (scanf("%d", &n) != 1 || n < 1 || n > MAX) {
+        printf("Invalid input. Please enter a number between 1 and %d.\n", MAX);
+        return 1;
+    }
+
+    printf("\nSolving %d-Queens Problem...\n\n", n);
+    solveNQueens(0, n);
+
+    if (solutionCount == 0)
+        printf("No solutions found.\n");
+    else
+        printf("Total solutions: %d\n", solutionCount);
+
+    return 0;
+}
