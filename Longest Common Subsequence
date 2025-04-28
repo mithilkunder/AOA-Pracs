@@ -60,3 +60,9 @@ int main() {
 
     return 0;
 }
+
+#OUTPUT
+Enter first string: ABABCDE
+Enter second string: BACADB
+Length of LCS: 4
+LCS: BACD
